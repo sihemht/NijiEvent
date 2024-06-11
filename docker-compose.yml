@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment: 
+      MYSQL_DATABASE: niji_event
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - symfony
+
+  php: 
+    build:
+      context: .
+      dockerfile: ./php.Dockerfile
+    volumes:
+      - ./backend:/var/www/html
+    networks:
+      - symfony
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx.Dockerfile
+    depends_on:
+      - mysql
+      - php
+    ports:
+      - 8080:80
+    volumes:
+      - ./backend:/var/www/html
+    networks:
+      - symfony
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./react.Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+
+networks:
+  symfony:
+    driver: bridge
