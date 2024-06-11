@@ -1,0 +1,26 @@
+framework:
+    workflows:
+        event_publishing:
+            type: 'state_machine'
+            marking_store:
+                type: 'method'
+                property: 'currentState'
+            supports:
+                - App\Entity\Event
+            initial_marking: draft
+            places:
+                - draft
+                - reviewed
+                - published
+                - rejected
+            transitions:
+                to_review:
+                    from: draft
+                    to: reviewed
+                publish:
+                    from: reviewed
+                    to: published
+                rejected:
+                    from: [reviewed, draft]
+                    to: rejected
+
