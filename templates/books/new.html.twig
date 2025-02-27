@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Books{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="col-12 col-md-6 col-lg-4 mb-3 mb-md-0">
+    <h1>Add Book</h1>
+
+    {{ include('books/_form.html.twig') }}
+
+        <a href="{{ path('app_books_index') }}">back to list</a>
+    </div>
+</div>
+    <div style="height: 60px;"></div>
+{% endblock %}

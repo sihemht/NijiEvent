@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="col-12 col-md-6 col-lg-4 mb-3 mb-md-0">
+    <h1>Books</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <td>{{ book.title }}</td>
+            </tr>
+            <tr>
+                <th>Saga</th>
+                <td>{{ book.saga }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ book.number }}</td>
+            </tr>
+            <tr>
+                <th>Month of purchase</th>
+                <td>{{ book.monthOfPurchase ? book.monthOfPurchase|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Number of page</th>
+                <td>{{ book.numberOfPage }}</td>
+            </tr>
+            <tr>
+                <th>Author(s)</th>
+                <td>
+                    {% for author in book.authors %}
+                        <li>{{ author }}</li>
+                    {% else %}
+                        No authors listed
+                    {% endfor %}</td>
+            </tr>
+        <tr>
+            <th>Genre(s)</th>
+            <td>
+                {% for genre in book.genres %}
+                   <li> {{ genre }}</li>
+                {% else %}
+                    No genres available
+                {% endfor %}
+            </td>
+        </tr>
+            <tr>
+                <th>Reading date(s)</th>
+                <td></td>
+            </tr>
+        <tr>
+            <th>Rating</th>
+            <td> {{ book.rating }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_books_index') }}">back to list</a>
+
+    <a href="{{ path('app_books_edit', {'id': book.id}) }}">edit</a>
+
+    {{ include('books/_delete_form.html.twig') }}
+    </div>
+    <div style="height: 60px;"></div>
+</div>
+{% endblock %}

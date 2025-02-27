@@ -1,0 +1,27 @@
+framework:
+    workflows:
+        book_reading:
+            type: 'state_machine'
+            initial_marking: 'to_read'
+            supports:
+                - App\Entity\Books
+            places:
+                - to_read
+                - reading
+                - finished
+                - abandoned
+            transitions:
+                start_reading:
+                    from: to_read
+                    to: reading
+                finish_reading:
+                    from: reading
+                    to: finished
+                abandon_reading:
+                    from: reading
+                    to: abandoned
+                abandon_without_reading:
+                    from: to_read
+                    to: abandoned
+            metadata:
+                title: 'Book Reading Workflow'
